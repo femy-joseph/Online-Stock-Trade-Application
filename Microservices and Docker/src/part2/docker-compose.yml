@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  catalog_service:
+    build:
+      context: .
+      dockerfile: catalog.Dockerfile
+    container_name: catalog_microservice
+    volumes:
+      - ./back-end/stocks_DB.csv:/app/data/container_stocks_DB.csv  
+  frontend_service:
+    build:
+      context: .
+      dockerfile: frontend.Dockerfile
+    ports:
+      - "12345:12345"
+    container_name: frontend_microservice
+    depends_on:
+      - catalog_service
+      - orders_service
+  orders_service:
+    build:
+      context: .
+      dockerfile: orders.Dockerfile
+    container_name: orders_microservice
+    depends_on:
+      - catalog_service    
+    volumes:
+      - ./back-end/stocks_DB.csv:/app/data/container_stocks_DB.csv  

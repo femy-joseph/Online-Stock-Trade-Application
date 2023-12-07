@@ -1,0 +1,4 @@
+python = 3.10.4 or above 3
+socket = 1.0.0
+grpcio
+grpcio-tools

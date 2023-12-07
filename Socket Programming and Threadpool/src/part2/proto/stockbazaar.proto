@@ -1,0 +1,67 @@
+// Copyright 2015 gRPC authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+
+
+package stockbazaar;
+
+// The Stock handle service definition.
+service StockHandle {
+  // Lookup takes stockname as input and returns price as output
+  rpc Lookup (LookupRequest) returns (lookupReply) {}
+  //Trade method to buy and sell, and based on trade updates the remaining stocks volume in DB
+  rpc Trade (TradeRequest) returns (TradeReply) {}
+  //Update method frequently updates the prices in the stock market[DB] 
+  rpc Update (UpdateRequest) returns (UpdateReply) {}
+
+}
+
+// The request message containing the Lookup's name.
+message LookupRequest {
+  string name = 1;
+}
+
+// The response message containing the reply
+message lookupReply {
+  float price = 1;
+  int32  volume = 2;
+}
+
+
+
+// The request message containing the Trade name,no of items , type.
+message TradeRequest {
+    string name = 1;
+    int32 add_remove =2;
+    string type=3;
+  }
+  
+  // The response message containing the reply
+  message TradeReply {
+    int32 message  = 1;
+  }
+
+  // The request message containing the Trade name,price
+message UpdateRequest {
+    string name = 1;
+    int32 price =2;
+    
+  }
+  
+  // The response message containing the reply
+  message UpdateReply {
+    int32 message = 1;
+  }
